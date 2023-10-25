@@ -11,6 +11,9 @@ Project 4
 ## References
 https://zegley.itch.io/2d-platformermetroidvania-asset-pack (2D SPRITE SHEET)
 
+The terrain spritemap is from the [Abstract Platformer package](https://kenney.nl/assets/abstract-platformer) available at Kenney.nl.
+
+
 ## Future Development
 
 ## Created by
