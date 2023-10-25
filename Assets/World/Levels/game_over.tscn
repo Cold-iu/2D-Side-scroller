@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dqr1qr2cohan7"]
+
+[node name="GameOver" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_right = 1152.0
+offset_bottom = 632.0
+text = "TO BE CONTINUED...."
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://t2q677fy3uhs"]
+[gd_scene load_steps=68 format=3 uid="uid://t2q677fy3uhs"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_1vca1"]
 [ext_resource type="Texture2D" uid="uid://b4m6yi0ekbpk3" path="res://Assets/Player/Player Crouch-Idle 48x48.png" id="2_o6h1u"]
@@ -447,39 +447,23 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uyttm"]
-size = Vector2(21, 28)
+size = Vector2(13, 20)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_t3j60"]
-size = Vector2(39.6516, 20)
-
-[node name="Game" type="Node2D"]
+[node name="Player" type="Node2D"]
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(560, 300)
 script = ExtResource("1_1vca1")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Player"]
-scale = Vector2(1.07131, 0.937067)
+scale = Vector2(0.736, 0.644)
 sprite_frames = SubResource("SpriteFrames_6td2k")
 animation = &"Walking"
 autoplay = "Idle"
 frame_progress = 0.739654
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-0.5, 3)
+position = Vector2(-1.5, 1)
 shape = SubResource("RectangleShape2D_uyttm")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 visible = false
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(4, 615)
-scale = Vector2(28.6662, 0.338541)
-
-[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(19.9423, 11.8154)
-shape = SubResource("RectangleShape2D_t3j60")
