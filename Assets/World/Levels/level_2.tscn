@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c45veswldcwjy" path="res://Assets/Tiles.png" id="1_47t8a"]
 [ext_resource type="PackedScene" uid="uid://t2q677fy3uhs" path="res://game.tscn" id="2_pc3p5"]
-[ext_resource type="Script" path="res://Assets/World/Levels/Portal.gd" id="3_uqe5n"]
+[ext_resource type="Script" path="res://Assets/World/Levels/Porta2l.gd" id="3_sg537"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_547vc"]
 texture = ExtResource("1_47t8a")
@@ -1122,11 +1122,11 @@ layer_0/tile_data = PackedInt32Array(262138, 65536, 3, 262142, 131072, 3, 196610
 position = Vector2(84, 56)
 scale = Vector2(2.10777, 2.11503)
 
-[node name="Portal" type="Area2D" parent="."]
+[node name="lvl_2_Portal" type="Area2D" parent="."]
 position = Vector2(-16, 272)
-script = ExtResource("3_uqe5n")
+script = ExtResource("3_sg537")
 
-[node name="ColorRect" type="ColorRect" parent="Portal"]
+[node name="ColorRect" type="ColorRect" parent="lvl_2_Portal"]
 offset_left = -9.0
 offset_top = -6.0
 offset_right = 31.0
@@ -1135,8 +1135,8 @@ scale = Vector2(1.50736, 1.21817)
 color = Color(0, 1, 0, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="lvl_2_Portal"]
 position = Vector2(21, 16.5)
 shape = SubResource("RectangleShape2D_caapb")
 
-[connection signal="body_entered" from="Portal" to="Portal" method="_on_body_entered"]
+[connection signal="body_entered" from="lvl_2_Portal" to="lvl_2_Portal" method="_on_body_entered"]
