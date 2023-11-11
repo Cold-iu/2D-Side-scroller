@@ -1,6 +1,7 @@
-[gd_scene load_steps=76 format=3 uid="uid://t2q677fy3uhs"]
+[gd_scene load_steps=86 format=3 uid="uid://t2q677fy3uhs"]
 
 [ext_resource type="Script" path="res://Player/Player.gd" id="1_1vca1"]
+[ext_resource type="Texture2D" uid="uid://85hovb4uqjka" path="res://Assets/Player/Player Punch 64x64.png" id="2_0dmvo"]
 [ext_resource type="Texture2D" uid="uid://b4m6yi0ekbpk3" path="res://Assets/Player/Player Crouch-Idle 48x48.png" id="2_o6h1u"]
 [ext_resource type="Texture2D" uid="uid://j1jpgieao0c" path="res://Assets/Player/player crouch-walk 48x48.png" id="3_w48lt"]
 [ext_resource type="Texture2D" uid="uid://bmdqs712gie1w" path="res://Assets/Player/Character Idle 48x48.png" id="4_ocfaq"]
@@ -15,6 +16,39 @@
 [ext_resource type="Script" path="res://Assets/Player/Falling.gd" id="13_fnpid"]
 [ext_resource type="Script" path="res://Crouching.gd" id="14_xtppv"]
 [ext_resource type="Script" path="res://Player/Crouch_Walk.gd" id="15_1uaoj"]
+[ext_resource type="Script" path="res://Player/Attacking.gd" id="15_fkd8q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ud468"]
+atlas = ExtResource("2_0dmvo")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngl8s"]
+atlas = ExtResource("2_0dmvo")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iuc2"]
+atlas = ExtResource("2_0dmvo")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3pxon"]
+atlas = ExtResource("2_0dmvo")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ublqd"]
+atlas = ExtResource("2_0dmvo")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq8oe"]
+atlas = ExtResource("2_0dmvo")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02iii"]
+atlas = ExtResource("2_0dmvo")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhher"]
+atlas = ExtResource("2_0dmvo")
+region = Rect2(448, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_frcca"]
 atlas = ExtResource("2_o6h1u")
@@ -252,6 +286,35 @@ region = Rect2(336, 0, 48, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ud468")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngl8s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iuc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3pxon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ublqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iq8oe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02iii")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhher")
+}],
+"loop": false,
+"name": &"Attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_frcca")
 }, {
 "duration": 1.0,
@@ -466,7 +529,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uahkp"]
-size = Vector2(13, 20)
+size = Vector2(14.5163, 20)
 
 [node name="Player" type="Node2D"]
 scale = Vector2(1.995, 1.995)
@@ -477,12 +540,13 @@ script = ExtResource("1_1vca1")
 [node name="Sprite" type="AnimatedSprite2D" parent="Player"]
 scale = Vector2(0.736, 0.644)
 sprite_frames = SubResource("SpriteFrames_0e1rg")
-animation = &"Crouch_Walk"
+animation = &"Attack"
 autoplay = "Idle"
-frame_progress = 0.645383
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-1.5, 1)
+position = Vector2(-0.741855, 1)
 shape = SubResource("RectangleShape2D_uahkp")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -508,9 +572,22 @@ script = ExtResource("12_e4114")
 script = ExtResource("13_fnpid")
 
 [node name="Attacking" type="Node" parent="Player/StateMachine"]
+script = ExtResource("15_fkd8q")
+
+[node name="Timer" type="Timer" parent="Player/StateMachine/Attacking"]
+wait_time = 0.12
+one_shot = true
+
+[node name="Attack" type="RayCast2D" parent="Player/StateMachine/Attacking"]
+position = Vector2(-1, -1)
+scale = Vector2(2.795, 1.075)
+target_position = Vector2(18.6047, 0.930233)
 
 [node name="Crouching" type="Node" parent="Player/StateMachine"]
 script = ExtResource("14_xtppv")
 
 [node name="Crouch_Walk" type="Node" parent="Player/StateMachine"]
 script = ExtResource("15_1uaoj")
+
+[connection signal="animation_finished" from="Player/Sprite" to="Player" method="_on_sprite_animation_finished"]
+[connection signal="timeout" from="Player/StateMachine/Attacking/Timer" to="Player/StateMachine/Attacking" method="_on_timer_timeout"]

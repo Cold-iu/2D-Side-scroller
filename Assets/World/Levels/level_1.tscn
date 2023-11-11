@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://crmngqdxeuke6"]
+[gd_scene load_steps=14 format=3 uid="uid://crmngqdxeuke6"]
 
 [ext_resource type="Texture2D" uid="uid://c45veswldcwjy" path="res://Assets/Tiles.png" id="1_p7fg1"]
 [ext_resource type="Script" path="res://Player/Player_Container.gd" id="2_2fewo"]
@@ -6,6 +6,8 @@
 [ext_resource type="NavigationPolygon" uid="uid://ccn3u4ckdcnx0" path="res://Assets/World/Levels/level_1.tres" id="4_jm8da"]
 [ext_resource type="PackedScene" uid="uid://bmxog8crlngrp" path="res://Assets/Enemy/enemy.tscn" id="4_me7d4"]
 [ext_resource type="PackedScene" uid="uid://clfk6vk165mbk" path="res://Assets/Enemy/Enemy2.tscn" id="5_vq1m1"]
+[ext_resource type="PackedScene" uid="uid://ccjf0t2mvntff" path="res://hud.tscn" id="7_8kmkb"]
+[ext_resource type="PackedScene" uid="uid://cqwgljm3ccb6x" path="res://coin.tscn" id="8_bfqkg"]
 
 [sub_resource type="TileSet" id="TileSet_4rg0f"]
 
@@ -764,6 +766,9 @@ sources/0 = SubResource("TileSetAtlasSource_qkjpp")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwwdp"]
 size = Vector2(62, 53)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x7bf1"]
+size = Vector2(99.4595, 20)
+
 [node name="Game" type="Node2D"]
 
 [node name="Background" type="TileMap" parent="."]
@@ -800,9 +805,25 @@ shape = SubResource("RectangleShape2D_vwwdp")
 navigation_polygon = ExtResource("4_jm8da")
 
 [node name="Enemy2" parent="." instance=ExtResource("5_vq1m1")]
-position = Vector2(384, 464)
+position = Vector2(936, 264)
 
 [node name="Enemy" parent="." instance=ExtResource("4_me7d4")]
 position = Vector2(412, 509)
 
+[node name="UI" type="Node" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("7_8kmkb")]
+
+[node name="Death_Zone" type="Area2D" parent="."]
+position = Vector2(0, 128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Death_Zone"]
+position = Vector2(624, 736)
+scale = Vector2(18.5, 9.5)
+shape = SubResource("RectangleShape2D_x7bf1")
+
+[node name="Coin" parent="." instance=ExtResource("8_bfqkg")]
+position = Vector2(128.5, 521.5)
+
 [connection signal="body_entered" from="Lvl_1_Portal" to="Lvl_1_Portal" method="_on_body_entered"]
+[connection signal="body_entered" from="Death_Zone" to="Player_Container" method="_on_death_zone_body_entered"]

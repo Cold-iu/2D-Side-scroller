@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 @onready var SM = $StateMachine
 
-@export var walking = 100
-@export var running = 250
+@export var walking = 250
+@export var running = 500
 @export var path = [Vector2(170,520), Vector2(500,520)]
 var direction = 1
 
@@ -14,6 +14,9 @@ func _ready():
 
 func _physics_process(_delta):
 	move_and_slide()
+	
+	if $State.text != SM.state_name:
+		$State.text = SM.state_name
 	
 	if velocity.x < 0 and not $AnimatedSprite2D.flip_h: 
 		$AnimatedSprite2D.flip_h = true
@@ -35,7 +38,7 @@ func damage():
 	if SM.state_name != "Die":
 		SM.set_state("Die")
 
-
+	
 func should_attack():
 	if $Attack.is_colliding() and $Attack.get_collider().name == "Player":
 		return true
@@ -43,9 +46,9 @@ func should_attack():
 
 func attack_target():
 	if $Attack.is_colliding():
+		print($Attack.get_collider().name)
 		return $Attack.get_collider()
 	return null
-
 
 
 func _on_animated_sprite_2d_animation_finished():
@@ -53,4 +56,3 @@ func _on_animated_sprite_2d_animation_finished():
 		SM.set_state("Move")
 	if SM.state_name == "Die":
 		queue_free()
- # Replace with function body.

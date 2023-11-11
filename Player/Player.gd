@@ -21,13 +21,38 @@ func _physics_process(_delta):
 	if $State.text != SM.state_name:
 		$State.text = SM.state_name
 
+func attack():
+	if $Attack.is_colliding():
+		var target = $Attack.get_collider()
+		print(target)
+		if target.has_method("damage"):
+			target.damage()
+
 func set_direction(d):
 	direction = d
-
+	
+			
 func set_animation(anim):
 	if $Sprite.animation == anim: return
 	if $Sprite.sprite_frames.has_animation(anim): $Sprite.play(anim)
 	else: $Sprite.play()
 
+func respawn():
+	get_tree().reload_current_scene()
+
 func die():
-	queue_free()
+	Global.Health -= 1
+	if Global.Health < 0:
+		queue_free()
+	else:
+		respawn()
+
+
+func _on_sprite_animation_finished():
+		SM.set_state("Idle") # Replace with function body.
+
+
+
+func _on_coin_collector_area_entered(body):
+	if body.name == "Coin":
+		Global.add_coin()

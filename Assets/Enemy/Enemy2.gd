@@ -11,7 +11,7 @@ var initial_pos = Vector2.ZERO
 var mode = ""
 
 
-var points = Vector2.ZERO
+var points = []
 const margin = 1.5
 
 func _ready():
@@ -28,11 +28,11 @@ func nav_setup():
 func _physics_process(_delta):
 	player = get_node_or_null("/root/Game/Player_Container/Player")
 	var s = looking_speed
-	var points = player.position
+	var points = player.global_position # Udse global_position here
 	if player != null and nav_ready:
 		$NavigationAgent2D.target_position = player.global_position
 		points = $NavigationAgent2D.get_next_path_position()
-		$See.target_position = to_local(player.global_position)
+		$See.target_position = (player.global_position) # Use to_local() here
 		var c = $See.get_collider()
 		if c == player:
 			s = speed
@@ -47,6 +47,11 @@ func _physics_process(_delta):
 			velocity = Vector2.ZERO
 		move_and_slide()
 
+
+func set_animation(anim):
+	if $AnimatedSprite2D.animation == anim and $AnimatedSprite2D.is_playing(): return
+	if $AnimatedSprite2D.sprite_frames.has_animation(anim): $AnimatedSprite2D.play(anim)
+	else: $AnimatedSprite2D.play()
 
 func _on_attack_body_entered(body):
 	if body.name == "Player":

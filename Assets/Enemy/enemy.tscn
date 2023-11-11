@@ -133,7 +133,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5bljc")
 }],
-"loop": true,
+"loop": false,
 "name": &"Attack",
 "speed": 7.0
 }, {
@@ -168,7 +168,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qt2fh")
 }],
-"loop": true,
+"loop": false,
 "name": &"Death",
 "speed": 5.0
 }, {
@@ -223,7 +223,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u8074"]
-size = Vector2(29.4821, 42.4193)
+size = Vector2(36.6534, 42.4193)
 
 [node name="Enemy" type="CharacterBody2D"]
 position = Vector2(252, 117)
@@ -236,12 +236,14 @@ sprite_frames = SubResource("SpriteFrames_6ubnf")
 animation = &"Attack"
 
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.78883, 19.4278)
+position = Vector2(0.796814, 19.4278)
 shape = SubResource("RectangleShape2D_u8074")
 
 [node name="Attack" type="RayCast2D" parent="."]
+self_modulate = Color(1, 0, 1, 1)
 position = Vector2(1.59363, 17.5299)
-target_position = Vector2(56.5737, 0)
+target_position = Vector2(34.263, -0.796837)
+collide_with_areas = true
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("6_cdm5p")
@@ -258,6 +260,10 @@ script = ExtResource("9_i0lx7")
 [node name="Timer" type="Timer" parent="StateMachine/Attack"]
 wait_time = 0.25
 one_shot = true
+
+[node name="State" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="StateMachine/Attack/Timer" to="StateMachine/Attack" method="_on_timer_timeout"]

@@ -1,0 +1,102 @@
+[gd_scene load_steps=8 format=3 uid="uid://bchdmem65m5t1"]
+
+[ext_resource type="Shader" path="res://game_over.gdshader" id="1_jr4be"]
+[ext_resource type="Script" path="res://game_over.gd" id="1_vfm82"]
+[ext_resource type="FontFile" uid="uid://cptjbsnfgtxxu" path="res://Assets/KOMIKAX_.ttf" id="2_jbisf"]
+[ext_resource type="FontFile" uid="uid://cbdlsbgu2d77d" path="res://Gratina.otf" id="4_xn43k"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ptu03"]
+shader = ExtResource("1_jr4be")
+shader_parameter/rain_amount = 200.0
+shader_parameter/near_rain_length = 0.2
+shader_parameter/far_rain_length = 0.1
+shader_parameter/near_rain_width = 1.0
+shader_parameter/far_rain_width = 0.5
+shader_parameter/near_rain_transparency = 1.0
+shader_parameter/far_rain_transparency = 0.5
+shader_parameter/rain_color = Color(0, 0.8, 0.8, 1)
+shader_parameter/base_rain_speed = 0.5
+shader_parameter/additional_rain_speed = 0.5
+shader_parameter/slant = 0.202
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g5j87"]
+
+[sub_resource type="Theme" id="Theme_3wc6m"]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_hover_color = Color(0.972549, 0.952941, 0.866667, 1)
+Button/colors/font_outline_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(0.992157, 0.415686, 0, 1)
+Button/styles/focus = SubResource("StyleBoxEmpty_g5j87")
+
+[node name="Game_Over" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vfm82")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Background" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_ptu03")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_jbisf")
+theme_override_font_sizes/font_size = 64
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_left = 465.0
+offset_top = 397.0
+offset_right = 690.0
+offset_bottom = 459.0
+theme = SubResource("Theme_3wc6m")
+theme_override_fonts/font = ExtResource("2_jbisf")
+theme_override_font_sizes/font_size = 32
+text = "Play Again?"
+icon_alignment = 1
+
+[node name="Final_Score" type="Label" parent="CanvasLayer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 300.0
+offset_top = -127.5
+offset_right = 375.0
+offset_bottom = -95.5
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_xn43k")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Lives_Left" type="Label" parent="CanvasLayer"]
+offset_left = 720.0
+offset_top = 200.0
+offset_right = 795.0
+offset_bottom = 232.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_xn43k")
+theme_override_font_sizes/font_size = 32
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

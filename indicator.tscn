@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c86mxepsccxsg"]
+
+[ext_resource type="Texture2D" uid="uid://bmdqs712gie1w" path="res://Assets/Player/Character Idle 48x48.png" id="1_lsu0m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bpda"]
+atlas = ExtResource("1_lsu0m")
+region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i2smx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bpda")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="indicator" type="Node2D"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_i2smx")

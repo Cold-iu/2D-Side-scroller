@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dodtk3cfpr6vy"]
+[gd_scene load_steps=12 format=3 uid="uid://dodtk3cfpr6vy"]
 
 [ext_resource type="Texture2D" uid="uid://c45veswldcwjy" path="res://Assets/Tiles.png" id="1_47t8a"]
-[ext_resource type="PackedScene" uid="uid://t2q677fy3uhs" path="res://game.tscn" id="2_pc3p5"]
+[ext_resource type="Script" path="res://Player/Player_Container.gd" id="2_3yyrx"]
 [ext_resource type="Script" path="res://Assets/World/Levels/Porta2l.gd" id="3_sg537"]
+[ext_resource type="PackedScene" uid="uid://ccjf0t2mvntff" path="res://hud.tscn" id="4_wfdxa"]
+[ext_resource type="PackedScene" uid="uid://cqwgljm3ccb6x" path="res://coin.tscn" id="5_o8v0j"]
+[ext_resource type="PackedScene" uid="uid://clfk6vk165mbk" path="res://Assets/Enemy/Enemy2.tscn" id="6_anf0w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_547vc"]
 texture = ExtResource("1_47t8a")
@@ -1105,7 +1108,7 @@ sources/0 = SubResource("TileSetAtlasSource_qkjpp")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_caapb"]
 size = Vector2(62, 53)
 
-[node name="Level_1" type="Node2D"]
+[node name="Game" type="Node2D"]
 
 [node name="Background" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_n27fc")
@@ -1118,9 +1121,9 @@ tile_set = SubResource("TileSet_og0x5")
 format = 2
 layer_0/tile_data = PackedInt32Array(262138, 65536, 3, 262142, 131072, 3, 196610, 131072, 4, 458758, 131072, 4, 458754, 131072, 5, 720906, 327680, 5, 720902, 262144, 5, 720910, 327680, 5, 720914, 458752, 3, 327706, 458752, 4, 327710, 524288, 4, 786470, 262144, 3, 786478, 262144, 3, 1245187, 524288, 3, 1507340, 524288, 3, 1114143, 524288, 3, 1638428, 393216, 3, 1638424, 393216, 3, 1441838, 524288, 3, 39, 458752, 4, 43, 524288, 4, 1179637, 458752, 4, 1179641, 524288, 4, 1376275, 524288, 3, 1638436, 393216, 3, 1638432, 393216, 3, 393268, 524288, 3, 131132, 458752, 4, 131136, 524288, 4, 262136, 524288, 3, 196600, 524288, 3, 131064, 524288, 3, 65528, 524288, 3, -8, 524288, 3, -65544, 524288, 3, -131080, 524288, 3, -196616, 524288, 3, -262152, 524288, 3, -327688, 524288, 3)
 
-[node name="Player" parent="." instance=ExtResource("2_pc3p5")]
-position = Vector2(84, 56)
-scale = Vector2(2.10777, 2.11503)
+[node name="Player_Container" type="Node2D" parent="."]
+position = Vector2(96, -16)
+script = ExtResource("2_3yyrx")
 
 [node name="lvl_2_Portal" type="Area2D" parent="."]
 position = Vector2(-16, 272)
@@ -1138,5 +1141,26 @@ metadata/_edit_use_anchors_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="lvl_2_Portal"]
 position = Vector2(21, 16.5)
 shape = SubResource("RectangleShape2D_caapb")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("4_wfdxa")]
+
+[node name="Coin" parent="." instance=ExtResource("5_o8v0j")]
+position = Vector2(1144, 67)
+
+[node name="Coin2" parent="." instance=ExtResource("5_o8v0j")]
+position = Vector2(888, 384)
+
+[node name="Spawn" type="ColorRect" parent="."]
+offset_left = 96.0
+offset_top = 72.0
+offset_right = 96.0
+offset_bottom = 72.0
+color = Color(1, 0, 1, 1)
+
+[node name="Enemy" parent="." instance=ExtResource("6_anf0w")]
+position = Vector2(808, 32)
+scale = Vector2(0.25, 0.25)
 
 [connection signal="body_entered" from="lvl_2_Portal" to="lvl_2_Portal" method="_on_body_entered"]

@@ -12,12 +12,12 @@ func start():
 func physics_process(_delta):
 	if not player.is_on_floor():
 		SM.set_state("Falling")
-	if Input.is_action_pressed("jump"):
+	if Input.is_action_pressed("Jump"):
 		SM.set_state("Jumping")
 
 	var direction = Input.get_axis("Move_Left","Move_Right")
 	player.set_direction(direction)
-	if direction:
+	if direction: 
 		player.velocity.x = player.direction * player.SPEED
 		if Input.is_action_pressed("Run"):
 			player.velocity.x = player.direction * (player.SPEED * 1.25)
